@@ -1,0 +1,156 @@
+
+[   4.6m] $ python scripts/score.py --pred work/preds/e3.jsonl --name E4 --out work/evidence/e4_coord_norm1000.json --split test --coord norm1000 $(python -m lab.meta_args work/runs/e3)
+E4 [test] n=311 valid=1.000 P=0.462 R=0.400 F1=0.429 CI95=0.389-0.469 meanIoU=0.700 FP/img=0.87
+   pothole  P=0.375 R=0.273 F1=0.316
+   crack    P=0.340 R=0.334 F1=0.337
+   manhole  P=0.820 R=0.613 F1=0.702
+[   4.6m] lane0 rc=0 (0.0m): python scripts/score.py --pred work/preds/e3.jsonl --name E4 --out work/evidence/e4_coord_norm1000.json --split test --coord norm1000 $(python -m lab.meta_args work/runs/e3)
+
+[   4.6m] $ python -m lab.train --setup E3 --coord pixel --out work/runs/e4_coord_pixel
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+{"setup": "E3", "r": 16, "alpha": 32, "n_lora_modules": 348, "n_lora_modules_vit": 96, "trainable_params": 148426752, "lora_params": 39321600, "projector_params": 109105152, "projector_tensors": 24}
+train images=1422 trainable=148,426,752 load_minutes=0.3
+[transformers] `use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`.
+[E3] step 1/300 loss=1.9621 gn=8.628 lr=1.33e-05 0.2min vram=6.38GB
+[E3] step 10/300 loss=0.8204 gn=1.045 lr=1.33e-04 1.7min vram=7.61GB
+[E3] step 20/300 loss=0.6985 gn=0.513 lr=2.00e-04 3.6min vram=8.35GB
+[E3] step 30/300 loss=0.6655 gn=0.652 lr=1.99e-04 5.5min vram=8.35GB
+[E3] step 40/300 loss=0.6601 gn=0.370 lr=1.96e-04 7.3min vram=8.35GB
+[E3] step 50/300 loss=0.6612 gn=0.704 lr=1.93e-04 9.2min vram=8.35GB
+[E3] step 60/300 loss=0.6544 gn=1.080 lr=1.88e-04 11.1min vram=8.35GB
+[E3] step 70/300 loss=0.6411 gn=0.823 lr=1.82e-04 12.9min vram=8.35GB
+[E3] step 80/300 loss=0.5970 gn=1.092 lr=1.75e-04 14.8min vram=8.35GB
+[E3] step 90/300 loss=0.6206 gn=1.085 lr=1.68e-04 16.7min vram=8.35GB
+[E3] step 100/300 loss=0.5983 gn=1.527 lr=1.59e-04 18.5min vram=8.35GB
+[E3] step 110/300 loss=0.6278 gn=0.586 lr=1.50e-04 20.4min vram=8.35GB
+[E3] step 120/300 loss=0.6634 gn=0.741 lr=1.40e-04 22.3min vram=8.35GB
+[E3] step 130/300 loss=0.6117 gn=1.389 lr=1.30e-04 24.2min vram=8.35GB
+[E3] step 140/300 loss=0.5255 gn=0.475 lr=1.19e-04 26.1min vram=8.35GB
+[E3] step 150/300 loss=0.6113 gn=0.626 lr=1.08e-04 28.0min vram=8.35GB
+[E3] step 160/300 loss=0.5030 gn=0.552 lr=9.72e-05 29.8min vram=8.35GB
+[E3] step 170/300 loss=0.6001 gn=1.766 lr=8.63e-05 31.6min vram=8.35GB
+[E3] step 180/300 loss=0.5922 gn=1.332 lr=7.55e-05 33.5min vram=8.35GB
+[E3] step 190/300 loss=0.5353 gn=0.984 lr=6.49e-05 35.4min vram=8.35GB
+[E3] step 200/300 loss=0.5379 gn=0.581 lr=5.48e-05 37.2min vram=8.35GB
+[E3] step 210/300 loss=0.5568 gn=1.143 lr=4.53e-05 39.2min vram=8.35GB
+[E3] step 220/300 loss=0.5637 gn=0.897 lr=3.64e-05 41.0min vram=8.35GB
+[E3] step 230/300 loss=0.4925 gn=0.645 lr=2.83e-05 42.9min vram=8.35GB
+[E3] step 240/300 loss=0.5569 gn=0.651 lr=2.11e-05 44.7min vram=8.35GB
+[E3] step 250/300 loss=0.5792 gn=0.855 lr=1.48e-05 46.6min vram=8.35GB
+[E3] step 260/300 loss=0.5162 gn=0.918 lr=9.56e-06 48.4min vram=8.35GB
+[E3] step 270/300 loss=0.5561 gn=1.081 lr=5.42e-06 50.3min vram=8.35GB
+[E3] step 280/300 loss=0.5158 gn=0.869 lr=2.42e-06 52.2min vram=8.35GB
+[E3] step 290/300 loss=0.4912 gn=0.765 lr=6.07e-07 54.0min vram=8.35GB
+[E3] step 300/300 loss=0.5234 gn=0.785 lr=0.00e+00 55.9min vram=8.35GB
+{"setup": "E3", "r": 16, "alpha": 32, "n_lora_modules": 348, "n_lora_modules_vit": 96, "trainable_params": 148426752, "lora_params": 39321600, "projector_params": 109105152, "projector_tensors": 24, "model_id": "Qwen/Qwen3-VL-4B-Instruct", "dropout": 0.05, "lr": 0.0002, "batch_size": 2, "grad_accum": 4, "max_steps": 300, "warmup_frac": 0.05, "save_every": 100, "train_fraction": 1.0, "coord": "pixel", "seed": 42, "workers": 2, "no_mask_prompt": false, "train_images": 1422, "peak_vram_gb": 8.35, "peak_reserved_gb": 9.02, "train_minutes": 55.91, "gpu": "Tesla T4", "torch": "2.11.0+cu128", "python": "3.13.15"}
+[  60.9m] lane0 rc=0 (56.4m): python -m lab.train --setup E3 --coord pixel --out work/runs/e4_coord_pixel
+
+[  60.9m] $ python -m lab.infer --run-dir work/runs/e4_coord_pixel --coord pixel --out work/preds/e4_coord_pixel.jsonl
+test: 311 ảnh, còn 311
+
+đã nạp lại 24 tensor projector từ work/runs/e4_coord_pixel/projector.pt
+ví dụ output: '[{"label":"crack","bbox_2d":[230,235,340,264]}]'
+  16/311 1.1min
+  32/311 1.5min
+  48/311 1.9min
+  64/311 2.3min
+  80/311 2.6min
+  96/311 3.0min
+  112/311 3.5min
+  128/311 4.2min
+  144/311 4.8min
+  160/311 5.3min
+  176/311 5.9min
+  192/311 6.3min
+  208/311 6.7min
+  224/311 7.5min
+  240/311 8.1min
+  256/311 8.5min
+  272/311 9.0min
+  288/311 9.5min
+  304/311 9.9min
+  311/311 10.1min
+infer_minutes=10.05 peak_vram=5.49GB
+[  71.4m] lane0 rc=0 (10.5m): python -m lab.infer --run-dir work/runs/e4_coord_pixel --coord pixel --out work/preds/e4_coord_pixel.jsonl
+
+[  71.4m] $ python scripts/score.py --pred work/preds/e4_coord_pixel.jsonl --name E4 --out work/evidence/e4_coord_pixel.json --split test --coord pixel $(python -m lab.meta_args work/runs/e4_coord_pixel)
+E4 [test] n=311 valid=0.997 P=0.378 R=0.350 F1=0.363 CI95=0.323-0.407 meanIoU=0.688 FP/img=1.08
+   pothole  P=0.274 R=0.215 F1=0.241
+   crack    P=0.282 R=0.294 F1=0.288
+   manhole  P=0.677 R=0.552 F1=0.608
+[  71.4m] lane0 rc=0 (0.0m): python scripts/score.py --pred work/preds/e4_coord_pixel.jsonl --name E4 --out work/evidence/e4_coord_pixel.json --split test --coord pixel $(python -m lab.meta_args work/runs/e4_coord_pixel)
+
+[  71.4m] $ python -m lab.train --setup E1 --no-mask-prompt --out work/runs/nomask_e1
+
+{"setup": "E1", "r": 16, "alpha": 32, "n_lora_modules": 252, "n_lora_modules_vit": 0, "trainable_params": 33030144, "lora_params": 33030144, "projector_params": 0, "projector_tensors": 0}
+train images=1422 trainable=33,030,144 load_minutes=0.2
+[transformers] `use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`.
+[E1] step 1/300 loss=13.4976 gn=12.363 lr=1.33e-05 0.2min vram=5.37GB
+[E1] step 10/300 loss=8.7718 gn=7.369 lr=1.33e-04 1.6min vram=5.74GB
+[E1] step 20/300 loss=4.6792 gn=1.115 lr=2.00e-04 3.2min vram=6.49GB
+[E1] step 30/300 loss=4.1594 gn=0.329 lr=1.99e-04 4.8min vram=6.49GB
+[E1] step 40/300 loss=4.1351 gn=0.185 lr=1.96e-04 6.3min vram=6.49GB
+[E1] step 50/300 loss=4.0873 gn=0.187 lr=1.93e-04 7.9min vram=6.49GB
+[E1] step 60/300 loss=4.1871 gn=0.133 lr=1.88e-04 9.5min vram=6.49GB
+[E1] step 70/300 loss=4.1727 gn=0.171 lr=1.82e-04 11.0min vram=6.49GB
+[E1] step 80/300 loss=4.2311 gn=0.127 lr=1.75e-04 12.6min vram=6.49GB
+[E1] step 90/300 loss=4.1714 gn=0.113 lr=1.68e-04 14.2min vram=6.49GB
+[E1] step 100/300 loss=4.2385 gn=0.073 lr=1.59e-04 15.7min vram=6.49GB
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[E1] step 110/300 loss=4.1432 gn=0.080 lr=1.50e-04 17.3min vram=6.49GB
+[E1] step 120/300 loss=3.9356 gn=0.082 lr=1.40e-04 18.9min vram=6.49GB
+[E1] step 130/300 loss=3.9912 gn=0.106 lr=1.30e-04 20.5min vram=6.49GB
+[E1] step 140/300 loss=4.0745 gn=0.093 lr=1.19e-04 22.1min vram=6.49GB
+[E1] step 150/300 loss=4.0218 gn=0.113 lr=1.08e-04 23.7min vram=6.49GB
+[E1] step 160/300 loss=4.2819 gn=0.079 lr=9.72e-05 25.2min vram=6.49GB
+[E1] step 170/300 loss=4.3711 gn=0.095 lr=8.63e-05 26.7min vram=6.49GB
+[E1] step 180/300 loss=3.9273 gn=0.093 lr=7.55e-05 28.3min vram=6.49GB
+[E1] step 190/300 loss=4.2642 gn=0.071 lr=6.49e-05 29.9min vram=6.49GB
+[E1] step 200/300 loss=4.0796 gn=0.091 lr=5.48e-05 31.5min vram=6.49GB
+[E1] step 210/300 loss=4.0747 gn=0.091 lr=4.53e-05 33.1min vram=6.49GB
+[E1] step 220/300 loss=3.9783 gn=0.100 lr=3.64e-05 34.6min vram=6.49GB
+[E1] step 230/300 loss=4.1224 gn=0.087 lr=2.83e-05 36.3min vram=6.49GB
+[E1] step 240/300 loss=4.0499 gn=0.098 lr=2.11e-05 37.8min vram=6.49GB
+[E1] step 250/300 loss=4.2213 gn=0.100 lr=1.48e-05 39.4min vram=6.49GB
+[E1] step 260/300 loss=4.1137 gn=0.092 lr=9.56e-06 40.9min vram=6.49GB
+[E1] step 270/300 loss=4.0811 gn=0.094 lr=5.42e-06 42.5min vram=6.49GB
+[E1] step 280/300 loss=4.0347 gn=0.088 lr=2.42e-06 44.0min vram=6.49GB
+[E1] step 290/300 loss=4.1811 gn=0.130 lr=6.07e-07 45.6min vram=6.49GB
+[E1] step 300/300 loss=4.1401 gn=0.083 lr=0.00e+00 47.2min vram=6.49GB
+{"setup": "E1", "r": 16, "alpha": 32, "n_lora_modules": 252, "n_lora_modules_vit": 0, "trainable_params": 33030144, "lora_params": 33030144, "projector_params": 0, "projector_tensors": 0, "model_id": "Qwen/Qwen3-VL-4B-Instruct", "dropout": 0.05, "lr": 0.0002, "batch_size": 2, "grad_accum": 4, "max_steps": 300, "warmup_frac": 0.05, "save_every": 100, "train_fraction": 1.0, "coord": "norm1000", "seed": 42, "workers": 2, "no_mask_prompt": true, "train_images": 1422, "peak_vram_gb": 6.49, "peak_reserved_gb": 7.13, "train_minutes": 47.17, "gpu": "Tesla T4", "torch": "2.11.0+cu128", "python": "3.13.15"}
+[ 118.9m] lane0 rc=0 (47.5m): python -m lab.train --setup E1 --no-mask-prompt --out work/runs/nomask_e1
+
+[ 118.9m] $ python -m lab.infer --run-dir work/runs/nomask_e1 --out work/preds/nomask_e1.jsonl
+test: 311 ảnh, còn 311
+
+ví dụ output: '[{"label":"manhole","bbox_2d":[766,639,848,703]},{"label":"manhole","bbox_2d":[906,778,1000,847]}]'
+  16/311 0.5min
+  32/311 1.5min
+  48/311 2.4min
+  64/311 3.1min
+  80/311 3.4min
+  96/311 4.2min
+  112/311 4.7min
+  128/311 5.7min
+  144/311 6.4min
+  160/311 7.0min
+  176/311 7.6min
+  192/311 8.6min
+  208/311 9.1min
+  224/311 9.9min
+  240/311 10.6min
+  256/311 11.3min
+  272/311 12.0min
+  288/311 12.6min
+  304/311 13.0min
+  311/311 13.3min
+infer_minutes=13.35 peak_vram=5.46GB
+[ 132.6m] lane0 rc=0 (13.7m): python -m lab.infer --run-dir work/runs/nomask_e1 --out work/preds/nomask_e1.jsonl
+
+[ 132.6m] $ python scripts/score.py --pred work/preds/nomask_e1.jsonl --name E1-nomask --out work/extra/nomask_e1.json --split test --coord norm1000 $(python -m lab.meta_args work/runs/nomask_e1)
+E1-nomask [test] n=311 valid=0.987 P=0.240 R=0.273 F1=0.255 CI95=0.219-0.292 meanIoU=0.671 FP/img=1.62
+   pothole  P=0.214 R=0.198 F1=0.206
+   crack    P=0.147 R=0.227 F1=0.178
+   manhole  P=0.761 R=0.411 F1=0.534
+[ 132.7m] lane0 rc=0 (0.0m): python scripts/score.py --pred work/preds/nomask_e1.jsonl --name E1-nomask --out work/extra/nomask_e1.json --split test --coord norm1000 $(python -m lab.meta_args work/runs/nomask_e1)

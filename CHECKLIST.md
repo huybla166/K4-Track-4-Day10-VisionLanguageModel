@@ -47,4 +47,4 @@ Tiến độ theo GUIDE/vlearn, kèm bằng chứng. Phần cứng: Kaggle Tesla
 - [x] `python scripts/check_submission.py` → 0 FAIL, 0 WARN
 - [x] Không commit `data/`, `work/`, `.env`, `*.safetensors`, `*.pt`; ≥ 5 commit
 - [x] Push lên GitHub (public): https://github.com/huybla166/K4-Track-4-Day10-VisionLanguageModel
-- [ ] Nộp link trên LMS (sinh viên tự nộp)
+- [x] Nộp link trên LMS (sinh viên tự nộp)

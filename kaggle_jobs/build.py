@@ -34,40 +34,49 @@ def train_and_eval(setup, run, pred, name, ev, extra=""):
 
 
 STAGES = {
-    # Kiểm tra nhanh toàn bộ đường ống trước khi tốn GPU cho thí nghiệm thật.
+    # Mỗi lane = list nhóm lệnh (một nhóm = một thí nghiệm, lỗi chỉ dừng nhóm đó); lane i chạy trên GPU i.
+    # smoke/smoke2/smoke3: kiểm tra nhanh đường ống trước khi tốn GPU cho thí nghiệm thật.
     "smoke": {
         "lanes": [
-            ["python -m lab.inspect_model --out work/inspect.json",
-             "python -m lab.train --setup E3 --out work/runs/smoke_e3 --max-steps 4 --save-every 2",
-             "python -m lab.check_reload work/runs/smoke_e3",
-             "python -m lab.infer --run-dir work/runs/smoke_e3 --split val --limit 8 "
-             "--out work/preds/smoke_e3_val.jsonl"],
-            ["python -m lab.infer --split val --limit 16 --out work/preds/smoke_e0_val.jsonl",
-             "python -m lab.train --setup E1 --out work/runs/smoke_e1 --max-steps 3",
-             "python -m lab.grpo --init-run work/runs/smoke_e1 --out work/runs/smoke_e5 --max-steps 2 "
-             "--limit 16"],
+            [["python -m lab.inspect_model --out work/inspect.json",
+              "python -m lab.train --setup E3 --out work/runs/smoke_e3 --max-steps 4 --save-every 2",
+              "python -m lab.check_reload work/runs/smoke_e3",
+              "python -m lab.infer --run-dir work/runs/smoke_e3 --split val --limit 8 "
+              "--out work/preds/smoke_e3_val.jsonl"]],
+            [["python -m lab.infer --split val --limit 16 --out work/preds/smoke_e0_val.jsonl",
+              "python -m lab.train --setup E1 --out work/runs/smoke_e1 --max-steps 3",
+              "python -m lab.grpo --init-run work/runs/smoke_e1 --out work/runs/smoke_e5 --max-steps 2 "
+              "--limit 16"]],
         ],
         "prev": [], "timeout": 3 * 3600,
     },
     "smoke2": {
         "lanes": [
-            ["python -m lab.train --setup E3 --out work/runs/smoke_e3 --max-steps 4 --save-every 2",
-             "python -m lab.check_reload work/runs/smoke_e3",
-             "python -m lab.infer --run-dir work/runs/smoke_e3 --split val --limit 16 "
-             "--out work/preds/smoke_e3_val.jsonl"],
-            ["python -m lab.inspect_model --out work/inspect.json",
-             "python -m lab.train --setup E2 --out work/runs/smoke_e2 --max-steps 4",
-             "python -m lab.check_reload work/runs/smoke_e2"],
+            [["python -m lab.train --setup E3 --out work/runs/smoke_e3 --max-steps 4 --save-every 2",
+              "python -m lab.check_reload work/runs/smoke_e3"]],
+            [["python -m lab.inspect_model --out work/inspect.json",
+              "python -m lab.train --setup E2 --out work/runs/smoke_e2 --max-steps 4",
+              "python -m lab.check_reload work/runs/smoke_e2"]],
         ],
         "prev": [], "timeout": 3 * 3600,
     },
+    "smoke3": {
+        "lanes": [
+            [["python -m lab.train --setup E3 --out work/runs/smoke_e3 --max-steps 4 --save-every 2",
+              "python -m lab.check_reload work/runs/smoke_e3",
+              "python -m lab.infer --run-dir work/runs/smoke_e3 --split val --limit 16 "
+              "--out work/preds/smoke_e3_val.jsonl"]],
+            [["python -m lab.infer --split val --limit 32 --out work/preds/smoke_e0_val.jsonl"]],
+        ],
+        "prev": [], "timeout": 2 * 3600,
+    },
     "main": {
         "lanes": [
-            train_and_eval("E1", "work/runs/e1", "work/preds/e1.jsonl", "E1", "work/evidence/e1.json")
-            + train_and_eval("E3", "work/runs/e3", "work/preds/e3.jsonl", "E3", "work/evidence/e3.json"),
-            train_and_eval("E2", "work/runs/e2", "work/preds/e2.jsonl", "E2", "work/evidence/e2.json")
-            + ["python -m lab.infer --out work/preds/e0.jsonl",
-               score("E0", "work/preds/e0.jsonl", "work/evidence/e0.json")],
+            [train_and_eval("E1", "work/runs/e1", "work/preds/e1.jsonl", "E1", "work/evidence/e1.json"),
+             train_and_eval("E2", "work/runs/e2", "work/preds/e2.jsonl", "E2", "work/evidence/e2.json")],
+            [train_and_eval("E3", "work/runs/e3", "work/preds/e3.jsonl", "E3", "work/evidence/e3.json"),
+             ["python -m lab.infer --out work/preds/e0.jsonl",
+              score("E0", "work/preds/e0.jsonl", "work/evidence/e0.json")]],
         ],
         "prev": [], "timeout": 8 * 3600,
     },
@@ -111,7 +120,7 @@ def main():
     out, slug = build(a.stage, spec)
     print(f"built {out} ({(out / 'run.py').stat().st_size / 1e3:.0f} kB)")
     for i, lane in enumerate(spec["lanes"]):
-        print(f"lane{i}:", *lane, sep="\n  ")
+        print(f"lane{i}:", *[c for g in lane for c in g], sep="\n  ")
     if a.push:
         subprocess.run(["kaggle", "kernels", "push", "-p", str(out), "-t", str(spec["timeout"]),
                         "--accelerator", "NvidiaTeslaT4"], check=True)

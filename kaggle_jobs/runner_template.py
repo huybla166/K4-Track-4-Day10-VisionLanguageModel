@@ -46,6 +46,8 @@ def main():
     sh("nvidia-smi -L")
     sh("pip install -q transformers==5.19.0 peft==0.21.2 trl==1.9.2 accelerate==1.15.0 "
        "bitsandbytes==0.50.2 2>&1 | grep -v -i 'warning\\|notice' | tail -5")
+    # torchao cũ của image Kaggle (0.10) làm peft lỗi khi bọc LoRA lên Linear fp16 của ViT (E3)
+    sh("pip uninstall -y -q torchao || true")
     sh("python -c \"import torch,transformers,peft,trl,bitsandbytes as b;"
        "print('versions', torch.__version__, transformers.__version__, peft.__version__, trl.__version__, b.__version__)\"")
 
@@ -76,21 +78,24 @@ def main():
 
     status = {}
 
-    def run_lane(i, cmds):
+    def run_lane(i, groups):
+        """Mỗi lane là list nhóm lệnh (một nhóm = một thí nghiệm); lệnh lỗi chỉ bỏ qua phần còn lại của nhóm."""
         env = dict(os.environ, CUDA_VISIBLE_DEVICES=str(i), PYTHONUNBUFFERED="1",
                    TOKENIZERS_PARALLELISM="false", PYTORCH_CUDA_ALLOC_CONF="expandable_segments:True")
         with open(LOGS / f"{STAGE}_lane{i}.log", "a", encoding="utf-8") as log:
-            for c in cmds:
-                log.write(f"\n{stamp()} $ {c}\n")
-                log.flush()
-                t = time.time()
-                rc = subprocess.run(c, shell=True, env=env, stdout=log, stderr=subprocess.STDOUT).returncode
-                msg = f"{stamp()} lane{i} rc={rc} ({(time.time() - t) / 60:.1f}m): {c}"
-                log.write(msg + "\n")
-                print(msg, flush=True)
-                status.setdefault(i, []).append({"cmd": c, "rc": rc, "minutes": (time.time() - t) / 60})
-                if rc != 0:
-                    break
+            for group in groups:
+                for c in group:
+                    log.write(f"\n{stamp()} $ {c}\n")
+                    log.flush()
+                    t = time.time()
+                    rc = subprocess.run(c, shell=True, env=env, stdout=log,
+                                        stderr=subprocess.STDOUT).returncode
+                    msg = f"{stamp()} lane{i} rc={rc} ({(time.time() - t) / 60:.1f}m): {c}"
+                    log.write(msg + "\n")
+                    print(msg, flush=True)
+                    status.setdefault(i, []).append({"cmd": c, "rc": rc, "minutes": (time.time() - t) / 60})
+                    if rc != 0:
+                        break
 
     threads = [threading.Thread(target=run_lane, args=(i, cmds)) for i, cmds in enumerate(LANES)]
     for th in threads:

@@ -1,0 +1,149 @@
+
+[   4.2m] $ python -m lab.train --setup E1 --out work/runs/e1
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+{"setup": "E1", "r": 16, "alpha": 32, "n_lora_modules": 252, "n_lora_modules_vit": 0, "trainable_params": 33030144, "lora_params": 33030144, "projector_params": 0, "projector_tensors": 0}
+train images=1422 trainable=33,030,144 load_minutes=0.2
+[transformers] `use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`.
+[E1] step 1/300 loss=2.0188 gn=7.362 lr=1.33e-05 0.2min vram=5.37GB
+[E1] step 10/300 loss=0.8036 gn=0.762 lr=1.33e-04 1.4min vram=5.74GB
+[E1] step 20/300 loss=0.7395 gn=0.506 lr=2.00e-04 2.7min vram=6.49GB
+[E1] step 30/300 loss=0.6687 gn=0.424 lr=1.99e-04 4.1min vram=6.49GB
+[E1] step 40/300 loss=0.6096 gn=0.455 lr=1.96e-04 5.5min vram=6.49GB
+[E1] step 50/300 loss=0.6362 gn=0.834 lr=1.93e-04 6.9min vram=6.49GB
+[E1] step 60/300 loss=0.6163 gn=0.493 lr=1.88e-04 8.3min vram=6.49GB
+[E1] step 70/300 loss=0.6395 gn=0.432 lr=1.82e-04 9.8min vram=6.49GB
+[E1] step 80/300 loss=0.6149 gn=0.616 lr=1.75e-04 11.2min vram=6.49GB
+[E1] step 90/300 loss=0.6420 gn=0.501 lr=1.68e-04 12.7min vram=6.49GB
+[E1] step 100/300 loss=0.5865 gn=0.391 lr=1.59e-04 14.1min vram=6.49GB
+[E1] step 110/300 loss=0.6331 gn=0.336 lr=1.50e-04 15.5min vram=6.49GB
+[E1] step 120/300 loss=0.6449 gn=0.610 lr=1.40e-04 16.9min vram=6.49GB
+[E1] step 130/300 loss=0.6634 gn=0.388 lr=1.30e-04 18.4min vram=6.49GB
+[E1] step 140/300 loss=0.5658 gn=0.403 lr=1.19e-04 19.9min vram=6.49GB
+[E1] step 150/300 loss=0.6412 gn=0.353 lr=1.08e-04 21.3min vram=6.49GB
+[E1] step 160/300 loss=0.5234 gn=0.433 lr=9.72e-05 22.8min vram=6.49GB
+[E1] step 170/300 loss=0.6201 gn=0.469 lr=8.63e-05 24.2min vram=6.49GB
+[E1] step 180/300 loss=0.6147 gn=0.290 lr=7.55e-05 25.6min vram=6.49GB
+[E1] step 190/300 loss=0.5868 gn=0.384 lr=6.49e-05 27.1min vram=6.49GB
+[E1] step 200/300 loss=0.5986 gn=0.464 lr=5.48e-05 28.5min vram=6.49GB
+[E1] step 210/300 loss=0.5660 gn=0.370 lr=4.53e-05 30.0min vram=6.49GB
+[E1] step 220/300 loss=0.5619 gn=1.364 lr=3.64e-05 31.4min vram=6.49GB
+[E1] step 230/300 loss=0.5570 gn=0.364 lr=2.83e-05 32.9min vram=6.49GB
+[E1] step 240/300 loss=0.6186 gn=0.338 lr=2.11e-05 34.3min vram=6.49GB
+[E1] step 250/300 loss=0.6344 gn=0.583 lr=1.48e-05 35.8min vram=6.49GB
+[E1] step 260/300 loss=0.5253 gn=0.370 lr=9.56e-06 37.2min vram=6.49GB
+[E1] step 270/300 loss=0.6343 gn=0.435 lr=5.42e-06 38.6min vram=6.49GB
+[E1] step 280/300 loss=0.5415 gn=0.343 lr=2.42e-06 40.1min vram=6.49GB
+[E1] step 290/300 loss=0.5550 gn=0.388 lr=6.07e-07 41.5min vram=6.49GB
+[E1] step 300/300 loss=0.5948 gn=0.346 lr=0.00e+00 43.0min vram=6.49GB
+{"setup": "E1", "r": 16, "alpha": 32, "n_lora_modules": 252, "n_lora_modules_vit": 0, "trainable_params": 33030144, "lora_params": 33030144, "projector_params": 0, "projector_tensors": 0, "model_id": "Qwen/Qwen3-VL-4B-Instruct", "dropout": 0.05, "lr": 0.0002, "batch_size": 2, "grad_accum": 4, "max_steps": 300, "warmup_frac": 0.05, "save_every": 100, "train_fraction": 1.0, "coord": "norm1000", "seed": 42, "workers": 2, "train_images": 1422, "peak_vram_gb": 6.49, "peak_reserved_gb": 7.13, "train_minutes": 42.97, "gpu": "Tesla T4", "torch": "2.11.0+cu128", "python": "3.13.15"}
+[  47.6m] lane0 rc=0 (43.4m): python -m lab.train --setup E1 --out work/runs/e1
+
+[  47.6m] $ python -m lab.infer --run-dir work/runs/e1 --out work/preds/e1.jsonl
+test: 311 ảnh, còn 311
+
+ví dụ output: '[{"label":"manhole","bbox_2d":[769,644,848,706]},{"label":"manhole","bbox_2d":[906,772,1000,850]}]'
+  16/311 0.4min
+  32/311 1.4min
+  48/311 1.8min
+  64/311 2.1min
+  80/311 2.4min
+  96/311 3.5min
+  112/311 4.1min
+  128/311 4.5min
+  144/311 5.1min
+  160/311 5.4min
+  176/311 5.8min
+  192/311 6.2min
+  208/311 6.8min
+  224/311 7.5min
+  240/311 8.0min
+  256/311 9.0min
+  272/311 9.6min
+  288/311 10.2min
+  304/311 10.6min
+  311/311 10.8min
+infer_minutes=10.79 peak_vram=5.46GB
+[  58.8m] lane0 rc=0 (11.2m): python -m lab.infer --run-dir work/runs/e1 --out work/preds/e1.jsonl
+
+[  58.8m] $ python scripts/score.py --pred work/preds/e1.jsonl --name E1 --out work/evidence/e1.json --split test --coord norm1000 $(python -m lab.meta_args work/runs/e1)
+E1 [test] n=311 valid=0.994 P=0.276 R=0.261 F1=0.268 CI95=0.232-0.309 meanIoU=0.681 FP/img=1.28
+   pothole  P=0.130 R=0.099 F1=0.113
+   crack    P=0.198 R=0.241 F1=0.217
+   manhole  P=0.723 R=0.417 F1=0.529
+[  58.8m] lane0 rc=0 (0.0m): python scripts/score.py --pred work/preds/e1.jsonl --name E1 --out work/evidence/e1.json --split test --coord norm1000 $(python -m lab.meta_args work/runs/e1)
+
+[  58.8m] $ python -m lab.train --setup E2 --out work/runs/e2
+
+{"setup": "E2", "r": 16, "alpha": 32, "n_lora_modules": 252, "n_lora_modules_vit": 0, "trainable_params": 142135296, "lora_params": 33030144, "projector_params": 109105152, "projector_tensors": 24}
+train images=1422 trainable=142,135,296 load_minutes=0.2
+[transformers] `use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`.
+[E2] step 1/300 loss=2.0188 gn=7.888 lr=1.33e-05 0.2min vram=6.25GB
+[E2] step 10/300 loss=0.7929 gn=1.034 lr=1.33e-04 1.4min vram=7.43GB
+[E2] step 20/300 loss=0.7409 gn=0.792 lr=2.00e-04 2.9min vram=8.18GB
+[E2] step 30/300 loss=0.6666 gn=1.911 lr=1.99e-04 4.3min vram=8.18GB
+[E2] step 40/300 loss=0.6022 gn=0.750 lr=1.96e-04 5.8min vram=8.18GB
+[E2] step 50/300 loss=0.6335 gn=0.709 lr=1.93e-04 7.2min vram=8.18GB
+[E2] step 60/300 loss=0.6368 gn=0.716 lr=1.88e-04 8.7min vram=8.18GB
+[E2] step 70/300 loss=0.6400 gn=0.745 lr=1.82e-04 10.1min vram=8.18GB
+[E2] step 80/300 loss=0.5918 gn=0.549 lr=1.75e-04 11.6min vram=8.18GB
+[E2] step 90/300 loss=0.6259 gn=0.565 lr=1.68e-04 13.1min vram=8.18GB
+[E2] step 100/300 loss=0.5956 gn=22.206 lr=1.59e-04 14.5min vram=8.18GB
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[E2] step 110/300 loss=0.5965 gn=0.799 lr=1.50e-04 16.0min vram=8.18GB
+[E2] step 120/300 loss=0.6377 gn=0.477 lr=1.40e-04 17.4min vram=8.18GB
+[E2] step 130/300 loss=0.6247 gn=0.896 lr=1.30e-04 18.9min vram=8.18GB
+[E2] step 140/300 loss=0.5668 gn=0.665 lr=1.19e-04 20.4min vram=8.18GB
+[E2] step 150/300 loss=0.6344 gn=0.543 lr=1.08e-04 21.9min vram=8.18GB
+[E2] step 160/300 loss=0.5217 gn=0.534 lr=9.72e-05 23.4min vram=8.18GB
+[E2] step 170/300 loss=0.6118 gn=0.578 lr=8.63e-05 24.8min vram=8.18GB
+[E2] step 180/300 loss=0.5835 gn=0.806 lr=7.55e-05 26.2min vram=8.18GB
+[E2] step 190/300 loss=0.5538 gn=0.567 lr=6.49e-05 27.7min vram=8.18GB
+[E2] step 200/300 loss=0.5512 gn=0.535 lr=5.48e-05 29.2min vram=8.18GB
+[E2] step 210/300 loss=0.5456 gn=0.534 lr=4.53e-05 30.7min vram=8.18GB
+[E2] step 220/300 loss=0.5462 gn=0.441 lr=3.64e-05 32.2min vram=8.18GB
+[E2] step 230/300 loss=0.4925 gn=0.973 lr=2.83e-05 33.7min vram=8.18GB
+[E2] step 240/300 loss=0.5789 gn=1.104 lr=2.11e-05 35.1min vram=8.18GB
+[E2] step 250/300 loss=0.5986 gn=3.101 lr=1.48e-05 36.6min vram=8.18GB
+[E2] step 260/300 loss=0.5179 gn=0.562 lr=9.56e-06 38.0min vram=8.18GB
+[E2] step 270/300 loss=0.5701 gn=0.478 lr=5.42e-06 39.4min vram=8.18GB
+[E2] step 280/300 loss=0.5069 gn=0.565 lr=2.42e-06 40.9min vram=8.18GB
+[E2] step 290/300 loss=0.5192 gn=0.549 lr=6.07e-07 42.4min vram=8.18GB
+[E2] step 300/300 loss=0.5363 gn=0.487 lr=0.00e+00 43.9min vram=8.18GB
+{"setup": "E2", "r": 16, "alpha": 32, "n_lora_modules": 252, "n_lora_modules_vit": 0, "trainable_params": 142135296, "lora_params": 33030144, "projector_params": 109105152, "projector_tensors": 24, "model_id": "Qwen/Qwen3-VL-4B-Instruct", "dropout": 0.05, "lr": 0.0002, "batch_size": 2, "grad_accum": 4, "max_steps": 300, "warmup_frac": 0.05, "save_every": 100, "train_fraction": 1.0, "coord": "norm1000", "seed": 42, "workers": 2, "train_images": 1422, "peak_vram_gb": 8.18, "peak_reserved_gb": 8.84, "train_minutes": 43.88, "gpu": "Tesla T4", "torch": "2.11.0+cu128", "python": "3.13.15"}
+[ 103.1m] lane0 rc=0 (44.3m): python -m lab.train --setup E2 --out work/runs/e2
+
+[ 103.1m] $ python -m lab.infer --run-dir work/runs/e2 --out work/preds/e2.jsonl
+test: 311 ảnh, còn 311
+
+đã nạp lại 24 tensor projector từ work/runs/e2/projector.pt
+ví dụ output: '[{"label":"crack","bbox_2d":[361,636,531,750]},{"label":"manhole","bbox_2d":[750,644,844,717]}]'
+  16/311 0.3min
+  32/311 0.7min
+  48/311 1.2min
+  64/311 1.6min
+  80/311 1.9min
+  96/311 2.6min
+  112/311 2.9min
+  128/311 3.5min
+  144/311 3.9min
+  160/311 4.2min
+  176/311 5.0min
+  192/311 5.4min
+  208/311 5.9min
+  224/311 6.6min
+  240/311 7.1min
+  256/311 7.7min
+  272/311 8.3min
+  288/311 8.6min
+  304/311 9.0min
+  311/311 9.2min
+infer_minutes=9.19 peak_vram=5.46GB
+[ 112.7m] lane0 rc=0 (9.6m): python -m lab.infer --run-dir work/runs/e2 --out work/preds/e2.jsonl
+
+[ 112.7m] $ python scripts/score.py --pred work/preds/e2.jsonl --name E2 --out work/evidence/e2.json --split test --coord norm1000 $(python -m lab.meta_args work/runs/e2)
+E2 [test] n=311 valid=1.000 P=0.322 R=0.304 F1=0.313 CI95=0.276-0.353 meanIoU=0.674 FP/img=1.20
+   pothole  P=0.191 R=0.149 F1=0.167
+   crack    P=0.226 R=0.254 F1=0.239
+   manhole  P=0.697 R=0.509 F1=0.589
+[ 112.7m] lane0 rc=0 (0.0m): python scripts/score.py --pred work/preds/e2.jsonl --name E2 --out work/evidence/e2.json --split test --coord norm1000 $(python -m lab.meta_args work/runs/e2)

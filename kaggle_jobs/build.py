@@ -111,12 +111,43 @@ def build(stage, spec):
     return out, slug
 
 
+def stage2(best):
+    """E4 (coord_scale: norm1000 vs pixel) và E5 (GRPO) đều dựa trên setup tốt nhất của E1–E3.
+
+    Thêm một đối chứng cho câu 4: E1 y hệt nhưng tính loss trên cả token ảnh + prompt (không mask).
+    """
+    run = f"work/runs/{best.lower()}"
+    pix = "work/runs/e4_coord_pixel"
+    nomask = "work/runs/nomask_e1"
+    grpo = ["python -m lab.infer --run-dir work/runs/e5 --out work/preds/e5.jsonl",
+            score("E5", "work/preds/e5.jsonl", "work/evidence/e5.json", run="work/runs/e5")]
+    return {
+        "lanes": [
+            [[score("E4", f"work/preds/{best.lower()}.jsonl", "work/evidence/e4_coord_norm1000.json", run=run)],
+             [f"python -m lab.train --setup {best.upper()} --coord pixel --out {pix}",
+              f"python -m lab.infer --run-dir {pix} --coord pixel --out work/preds/e4_coord_pixel.jsonl",
+              score("E4", "work/preds/e4_coord_pixel.jsonl", "work/evidence/e4_coord_pixel.json", run=pix,
+                    coord="pixel")],
+             [f"python -m lab.train --setup E1 --no-mask-prompt --out {nomask}",
+              f"python -m lab.infer --run-dir {nomask} --out work/preds/nomask_e1.jsonl",
+              score("E1-nomask", "work/preds/nomask_e1.jsonl", "work/extra/nomask_e1.json", run=nomask)]],
+            [[f"python -m lab.grpo --init-run {run} --out work/runs/e5", *grpo],
+             # dự phòng: nếu GRPO từ setup tốt nhất lỗi (vd. hết VRAM) thì khởi tạo từ E1 để vẫn có log E5
+             ["test ! -f work/evidence/e5.json",
+              "rm -rf work/runs/e5 work/preds/e5.jsonl",  # infer chạy tiếp file cũ: xoá dự đoán dở dang
+              "python -m lab.grpo --init-run work/runs/e1 --out work/runs/e5", *grpo]],
+        ],
+        "prev": ["day10-vlm-main"], "timeout": 6 * 3600,
+    }
+
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("stage", choices=sorted(STAGES))
+    ap.add_argument("stage", choices=sorted(STAGES) + ["stage2"])
+    ap.add_argument("--best", default="E3", help="setup tốt nhất của E1–E3 (cho stage2)")
     ap.add_argument("--push", action="store_true")
     a = ap.parse_args()
-    spec = STAGES[a.stage]
+    spec = stage2(a.best) if a.stage == "stage2" else STAGES[a.stage]
     out, slug = build(a.stage, spec)
     print(f"built {out} ({(out / 'run.py').stat().st_size / 1e3:.0f} kB)")
     for i, lane in enumerate(spec["lanes"]):

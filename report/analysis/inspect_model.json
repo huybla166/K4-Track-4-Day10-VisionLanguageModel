@@ -1,0 +1,145 @@
+{
+  "roundtrip": {
+    "train": {
+      "max_px_error": 0.32,
+      "zero_area_boxes": 1,
+      "out_of_frame_boxes": 49
+    },
+    "val": {
+      "max_px_error": 0.32,
+      "zero_area_boxes": 0,
+      "out_of_frame_boxes": 8
+    },
+    "test": {
+      "max_px_error": 0.32,
+      "zero_area_boxes": 0,
+      "out_of_frame_boxes": 6
+    }
+  },
+  "encoding": {
+    "image_grid_thw": [
+      1,
+      22,
+      40
+    ],
+    "n_image_tokens": 220,
+    "n_image_tokens_from_grid": 220,
+    "seq_len": 605,
+    "n_answer_tokens": 249,
+    "answer": "[{\"label\":\"crack\",\"bbox_2d\":[430,467,583,506]},{\"label\":\"pothole\",\"bbox_2d\":[361,475,414,522]},{\"label\":\"manhole\",\"bbox_2d\":[317,481,616,625]},{\"label\":\"pothole\",\"bbox_2d\":[583,500,627,614]},{\"label\":\"crack\",\"bbox_2d\":[580,508,655,614]},{\"label\":\"pothole\",\"bbox_2d\":[259,517,311,572]},{\"label\":\"crack\",\"bbox_2d\":[397,628,447,717]},{\"label\":\"crack\",\"bbox_2d\":[339,683,398,808]},{\"label\":\"crack\",\"bbox_2d\":[158,789,361,994]}]",
+    "decoded_labels": "[{\"label\":\"crack\",\"bbox_2d\":[430,467,583,506]},{\"label\":\"pothole\",\"bbox_2d\":[361,475,414,522]},{\"label\":\"manhole\",\"bbox_2d\":[317,481,616,625]},{\"label\":\"pothole\",\"bbox_2d\":[583,500,627,614]},{\"label\":\"crack\",\"bbox_2d\":[580,508,655,614]},{\"label\":\"pothole\",\"bbox_2d\":[259,517,311,572]},{\"label\":\"crack\",\"bbox_2d\":[397,628,447,717]},{\"label\":\"crack\",\"bbox_2d\":[339,683,398,808]},{\"label\":\"crack\",\"bbox_2d\":[158,789,361,994]}]<|im_end|>",
+    "full_text": "<|im_start|>user\n<|vision_start|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|image_pad|><|vision_end|>Locate every road damage instance in this dashcam image. Classes: pothole, crack, manhole. Answer with ONLY a JSON list in the form [{\"label\": \"pothole\", \"bbox_2d\": [x1, y1, x2, y2]}], where x1, y1, x2, y2 are integers on a 0-1000 scale relative to the image width and height (0,0 is the top-left corner, 1000,1000 is the bottom-right corner). If there is no damage, answer [].<|im_end|>\n<|im_start|>assistant\n[{\"label\":\"crack\",\"bbox_2d\":[430,467,583,506]},{\"label\":\"pothole\",\"bbox_2d\":[361,475,414,522]},{\"label\":\"manhole\",\"bbox_2d\":[317,481,616,625]},{\"label\":\"pothole\",\"bbox_2d\":[583,500,627,614]},{\"label\":\"crack\",\"bbox_2d\":[580,508,655,614]},{\"label\":\"pothole\",\"bbox_2d\":[259,517,311,572]},{\"label\":\"crack\",\"bbox_2d\":[397,628,447,717]},{\"label\":\"crack\",\"bbox_2d\":[339,683,398,808]},{\"label\":\"crack\",\"bbox_2d\":[158,789,361,994]}]<|im_end|>\n",
+    "keys": [
+      "attention_mask",
+      "image_grid_thw",
+      "input_ids",
+      "labels",
+      "mm_token_type_ids",
+      "pixel_values"
+    ]
+  },
+  "encoding_empty": null,
+  "answer_lengths": {
+    "train": {
+      "max_tokens": 366,
+      "p99_tokens": 219,
+      "mean_tokens": 70.15400843881856,
+      "max_boxes": 13,
+      "images_over_256_tokens": 5
+    },
+    "val": {
+      "max_tokens": 245,
+      "p99_tokens": 166,
+      "mean_tokens": 65.14492753623189,
+      "max_boxes": 9,
+      "images_over_256_tokens": 0
+    },
+    "test": {
+      "max_tokens": 196,
+      "p99_tokens": 142,
+      "mean_tokens": 53.80064308681672,
+      "max_boxes": 7,
+      "images_over_256_tokens": 0
+    }
+  },
+  "block_params": {
+    "vit (patch_embed+pos_embed+blocks)": 306242560,
+    "projector.merger": 27271680,
+    "projector.deepstack_merger_list": 81833472,
+    "llm.embed_tokens": 388956160,
+    "llm.layers+norm": 3633511936,
+    "total": 4437815808
+  },
+  "tie_word_embeddings": true,
+  "lora_modules": {
+    "E1": 252,
+    "E2": 252,
+    "E3": 348
+  },
+  "lora_params_r16": {
+    "E1": 33030144,
+    "E2": 33030144,
+    "E3": 39321600
+  },
+  "lora_params_by_r": {
+    "4": 8257536,
+    "16": 33030144,
+    "64": 132120576
+  },
+  "llm_module_example": [
+    "model.language_model.layers.0.self_attn.q_proj",
+    "model.language_model.layers.0.self_attn.k_proj",
+    "model.language_model.layers.0.self_attn.v_proj",
+    "model.language_model.layers.0.self_attn.o_proj",
+    "model.language_model.layers.0.mlp.gate_proj",
+    "model.language_model.layers.0.mlp.up_proj",
+    "model.language_model.layers.0.mlp.down_proj"
+  ],
+  "visual_tree_top": [
+    "model.visual.blocks",
+    "model.visual.blocks.0",
+    "model.visual.blocks.1",
+    "model.visual.blocks.10",
+    "model.visual.blocks.11",
+    "model.visual.blocks.12",
+    "model.visual.blocks.13",
+    "model.visual.blocks.14",
+    "model.visual.blocks.15",
+    "model.visual.blocks.16",
+    "model.visual.blocks.17",
+    "model.visual.blocks.18",
+    "model.visual.blocks.19",
+    "model.visual.blocks.2",
+    "model.visual.blocks.20",
+    "model.visual.blocks.21",
+    "model.visual.blocks.22",
+    "model.visual.blocks.23",
+    "model.visual.blocks.3",
+    "model.visual.blocks.4",
+    "model.visual.blocks.5",
+    "model.visual.blocks.6",
+    "model.visual.blocks.7",
+    "model.visual.blocks.8",
+    "model.visual.blocks.9",
+    "model.visual.deepstack_merger_list",
+    "model.visual.deepstack_merger_list.0",
+    "model.visual.deepstack_merger_list.1",
+    "model.visual.deepstack_merger_list.2",
+    "model.visual.merger",
+    "model.visual.merger.act_fn",
+    "model.visual.merger.linear_fc1",
+    "model.visual.merger.linear_fc2",
+    "model.visual.merger.norm",
+    "model.visual.patch_embed",
+    "model.visual.patch_embed.proj",
+    "model.visual.pos_embed",
+    "model.visual.rotary_pos_emb"
+  ],
+  "gpu_dtypes": {
+    "visual.blocks.0.attn.qkv": "torch.float16",
+    "visual.merger.linear_fc1": "torch.float16",
+    "lm_head": "torch.float16",
+    "llm q_proj": "Linear4bit"
+  },
+  "gpu_memory_after_load_gb": 3.24
+}

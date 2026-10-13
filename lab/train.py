@@ -49,6 +49,8 @@ def main(argv=None):
     ap.add_argument("--coord", default="norm1000", choices=["norm1000", "pixel"])
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--workers", type=int, default=2)
+    ap.add_argument("--no-mask-prompt", action="store_true",
+                    help="đối chứng câu 4: tính loss trên cả token ảnh + prompt")
     a = ap.parse_args(argv)
 
     out = Path(a.out)
@@ -65,7 +67,7 @@ def main(argv=None):
     processor.tokenizer.padding_side = "right"
 
     entries = subsample(load_split("train"), a.train_fraction, seed=a.seed)
-    ds = GroundingDataset(entries, processor, coord=a.coord)
+    ds = GroundingDataset(entries, processor, coord=a.coord, mask_prompt=not a.no_mask_prompt)
     g = torch.Generator().manual_seed(a.seed)
     loader = DataLoader(ds, batch_size=a.batch_size, shuffle=True, drop_last=True, generator=g,
                         collate_fn=make_collate(processor.tokenizer.pad_token_id),
@@ -86,9 +88,11 @@ def main(argv=None):
     log = open(out / "train_log.jsonl", "w", encoding="utf-8")
     t0 = time.time()
     for step in range(1, a.max_steps + 1):
-        loss_sum = 0.0
+        loss_sum, n_tok, n_sup = 0.0, 0, 0
         for _ in range(a.grad_accum):
             batch = {k: v.to(dev) for k, v in next(batches).items()}
+            n_tok += int(batch["attention_mask"].sum())
+            n_sup += int((batch["labels"] != -100).sum())
             with torch.autocast("cuda", dtype=torch.float16):
                 loss = model(**batch).loss / a.grad_accum
             if not torch.isfinite(loss):
@@ -104,7 +108,7 @@ def main(argv=None):
         sched.step()
         rec = {"step": step, "loss": loss_sum, "grad_norm": gnorm if math.isfinite(gnorm) else None,
                "lr": sched.get_last_lr()[0], "scale": scaler.get_scale(),
-               "elapsed_min": (time.time() - t0) / 60}
+               "elapsed_min": (time.time() - t0) / 60, "tokens": n_tok, "supervised_tokens": n_sup}
         log.write(json.dumps(rec) + "\n")
         log.flush()
         if step % 10 == 0 or step == 1:

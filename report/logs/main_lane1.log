@@ -1,0 +1,111 @@
+
+[   4.2m] $ python -m lab.train --setup E3 --out work/runs/e3
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+{"setup": "E3", "r": 16, "alpha": 32, "n_lora_modules": 348, "n_lora_modules_vit": 96, "trainable_params": 148426752, "lora_params": 39321600, "projector_params": 109105152, "projector_tensors": 24}
+train images=1422 trainable=148,426,752 load_minutes=0.2
+[transformers] `use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`.
+/tmp/repo/lab/train.py:104: UserWarning: Detected call of `lr_scheduler.step()` before `optimizer.step()`. In PyTorch 1.1.0 and later, you should call them in the opposite order: `optimizer.step()` before `lr_scheduler.step()`.  Failure to do this will result in PyTorch skipping the first value of the learning rate schedule. See more details at https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate
+  sched.step()
+[E3] step 1/300 loss=2.0188 gn=nan lr=1.33e-05 0.2min vram=6.38GB
+[E3] step 10/300 loss=0.7754 gn=1.236 lr=1.33e-04 1.7min vram=7.61GB
+[E3] step 20/300 loss=0.7280 gn=1.181 lr=2.00e-04 3.4min vram=8.35GB
+[E3] step 30/300 loss=0.5908 gn=1.100 lr=1.99e-04 5.1min vram=8.35GB
+[E3] step 40/300 loss=0.5743 gn=1.315 lr=1.96e-04 6.9min vram=8.35GB
+[E3] step 50/300 loss=0.6086 gn=1.027 lr=1.93e-04 8.6min vram=8.35GB
+[E3] step 60/300 loss=0.5691 gn=0.926 lr=1.88e-04 10.3min vram=8.35GB
+[E3] step 70/300 loss=0.6378 gn=1.141 lr=1.82e-04 12.0min vram=8.35GB
+[E3] step 80/300 loss=0.5056 gn=0.827 lr=1.75e-04 13.8min vram=8.35GB
+[E3] step 90/300 loss=0.5698 gn=0.819 lr=1.68e-04 15.5min vram=8.35GB
+[E3] step 100/300 loss=0.5907 gn=2.586 lr=1.59e-04 17.2min vram=8.35GB
+[E3] step 110/300 loss=0.5715 gn=0.877 lr=1.50e-04 19.0min vram=8.35GB
+[E3] step 120/300 loss=0.6260 gn=0.875 lr=1.40e-04 20.7min vram=8.35GB
+[E3] step 130/300 loss=0.5903 gn=6.999 lr=1.30e-04 22.4min vram=8.35GB
+[E3] step 140/300 loss=0.4840 gn=0.748 lr=1.19e-04 24.2min vram=8.35GB
+[E3] step 150/300 loss=0.6320 gn=0.831 lr=1.08e-04 25.9min vram=8.35GB
+[E3] step 160/300 loss=0.4866 gn=0.797 lr=9.72e-05 27.6min vram=8.35GB
+[E3] step 170/300 loss=0.6060 gn=0.755 lr=8.63e-05 29.3min vram=8.35GB
+[E3] step 180/300 loss=0.5492 gn=0.560 lr=7.55e-05 31.0min vram=8.35GB
+[E3] step 190/300 loss=0.4918 gn=0.888 lr=6.49e-05 32.7min vram=8.35GB
+[E3] step 200/300 loss=0.5104 gn=0.689 lr=5.48e-05 34.5min vram=8.35GB
+[E3] step 210/300 loss=0.4986 gn=0.623 lr=4.53e-05 36.3min vram=8.35GB
+[E3] step 220/300 loss=0.4927 gn=0.519 lr=3.64e-05 38.0min vram=8.35GB
+[E3] step 230/300 loss=0.4769 gn=0.615 lr=2.83e-05 39.8min vram=8.35GB
+[E3] step 240/300 loss=0.5351 gn=0.700 lr=2.11e-05 41.4min vram=8.35GB
+[E3] step 250/300 loss=0.5447 gn=0.897 lr=1.48e-05 43.2min vram=8.35GB
+[E3] step 260/300 loss=0.4696 gn=0.906 lr=9.56e-06 44.9min vram=8.35GB
+[E3] step 270/300 loss=0.5305 gn=0.621 lr=5.42e-06 46.6min vram=8.35GB
+[E3] step 280/300 loss=0.4577 gn=0.584 lr=2.42e-06 48.3min vram=8.35GB
+[E3] step 290/300 loss=0.4817 gn=0.677 lr=6.07e-07 50.0min vram=8.35GB
+[E3] step 300/300 loss=0.5053 gn=0.638 lr=0.00e+00 51.8min vram=8.35GB
+{"setup": "E3", "r": 16, "alpha": 32, "n_lora_modules": 348, "n_lora_modules_vit": 96, "trainable_params": 148426752, "lora_params": 39321600, "projector_params": 109105152, "projector_tensors": 24, "model_id": "Qwen/Qwen3-VL-4B-Instruct", "dropout": 0.05, "lr": 0.0002, "batch_size": 2, "grad_accum": 4, "max_steps": 300, "warmup_frac": 0.05, "save_every": 100, "train_fraction": 1.0, "coord": "norm1000", "seed": 42, "workers": 2, "train_images": 1422, "peak_vram_gb": 8.35, "peak_reserved_gb": 9.04, "train_minutes": 51.78, "gpu": "Tesla T4", "torch": "2.11.0+cu128", "python": "3.13.15"}
+[  56.4m] lane1 rc=0 (52.2m): python -m lab.train --setup E3 --out work/runs/e3
+
+[  56.4m] $ python -m lab.infer --run-dir work/runs/e3 --out work/preds/e3.jsonl
+test: 311 ảnh, còn 311
+
+đã nạp lại 24 tensor projector từ work/runs/e3/projector.pt
+ví dụ output: '[{"label":"crack","bbox_2d":[359,656,536,722]}]'
+  16/311 0.4min
+  32/311 0.9min
+  48/311 1.3min
+  64/311 1.7min
+  80/311 2.0min
+  96/311 2.3min
+  112/311 2.7min
+  128/311 3.2min
+  144/311 3.5min
+  160/311 4.0min
+  176/311 4.6min
+  192/311 5.0min
+  208/311 5.4min
+  224/311 6.1min
+  240/311 6.5min
+  256/311 6.9min
+  272/311 7.3min
+  288/311 7.7min
+  304/311 8.3min
+  311/311 8.5min
+infer_minutes=8.45 peak_vram=5.48GB
+[  65.3m] lane1 rc=0 (8.9m): python -m lab.infer --run-dir work/runs/e3 --out work/preds/e3.jsonl
+
+[  65.3m] $ python scripts/score.py --pred work/preds/e3.jsonl --name E3 --out work/evidence/e3.json --split test --coord norm1000 $(python -m lab.meta_args work/runs/e3)
+E3 [test] n=311 valid=1.000 P=0.462 R=0.400 F1=0.429 CI95=0.389-0.469 meanIoU=0.700 FP/img=0.87
+   pothole  P=0.375 R=0.273 F1=0.316
+   crack    P=0.340 R=0.334 F1=0.337
+   manhole  P=0.820 R=0.613 F1=0.702
+[  65.3m] lane1 rc=0 (0.0m): python scripts/score.py --pred work/preds/e3.jsonl --name E3 --out work/evidence/e3.json --split test --coord norm1000 $(python -m lab.meta_args work/runs/e3)
+
+[  65.3m] $ python -m lab.infer --out work/preds/e0.jsonl
+test: 311 ảnh, còn 311
+
+ví dụ output: '[{"label": "manhole", "bbox_2d": [770, 640, 843, 684]}]'
+  16/311 0.2min
+  32/311 1.1min
+  48/311 1.3min
+  64/311 2.3min
+  80/311 2.6min
+  96/311 3.5min
+  112/311 4.5min
+  128/311 4.7min
+  144/311 5.6min
+  160/311 6.6min
+  176/311 7.5min
+  192/311 8.4min
+  208/311 8.6min
+  224/311 9.5min
+  240/311 9.8min
+  256/311 10.8min
+  272/311 11.7min
+  288/311 12.2min
+  304/311 13.2min
+  311/311 13.3min
+infer_minutes=13.29 peak_vram=5.33GB
+[  79.0m] lane1 rc=0 (13.7m): python -m lab.infer --out work/preds/e0.jsonl
+
+[  79.0m] $ python scripts/score.py --pred work/preds/e0.jsonl --name E0 --out work/evidence/e0.json --split test --coord norm1000
+E0 [test] n=311 valid=0.907 P=0.144 R=0.077 F1=0.101 CI95=0.074-0.131 meanIoU=0.614 FP/img=0.86
+   pothole  P=0.227 R=0.083 F1=0.121
+   crack    P=0.043 R=0.027 F1=0.033
+   manhole  P=0.338 R=0.166 F1=0.222
+[  79.0m] lane1 rc=0 (0.0m): python scripts/score.py --pred work/preds/e0.jsonl --name E0 --out work/evidence/e0.json --split test --coord norm1000

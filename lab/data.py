@@ -15,8 +15,11 @@ def user_message(image, prompt):
                                         {"type": "text", "text": prompt}]}
 
 
-def encode_example(processor, image, prompt, answer):
-    """Trả dict tensor 1 mẫu; labels = -100 trên token ảnh + prompt, giữ nguyên token trả lời."""
+def encode_example(processor, image, prompt, answer, mask_prompt=True):
+    """Trả dict tensor 1 mẫu; labels = -100 trên token ảnh + prompt, giữ nguyên token trả lời.
+
+    mask_prompt=False chỉ dùng cho thí nghiệm đối chứng (câu 4): tính loss trên MỌI token.
+    """
     user = user_message(image, prompt)
     kw = dict(tokenize=True, return_dict=True, return_tensors="pt")
     prompt_enc = processor.apply_chat_template([user], add_generation_prompt=True, **kw)
@@ -34,6 +37,8 @@ def encode_example(processor, image, prompt, answer):
     ends = (ids == end_id).nonzero().flatten()
     if len(ends) and ends[-1] >= n:
         labels[ends[-1] + 1:] = IGNORE
+    if not mask_prompt:
+        labels = ids.clone()
     out = {k: v[0] for k, v in full_enc.items() if k not in ("pixel_values", "image_grid_thw")}
     out["pixel_values"] = full_enc["pixel_values"]
     out["image_grid_thw"] = full_enc["image_grid_thw"]
@@ -64,9 +69,10 @@ def subsample(entries, fraction, seed=42):
 
 
 class GroundingDataset(torch.utils.data.Dataset):
-    def __init__(self, entries, processor, coord="norm1000", data_dir=None):
+    def __init__(self, entries, processor, coord="norm1000", data_dir=None, mask_prompt=True):
         self.entries, self.processor, self.coord = entries, processor, coord
         self.data_dir = Path(data_dir or ROOT / "data")
+        self.mask_prompt = mask_prompt
 
     def __len__(self):
         return len(self.entries)
@@ -76,4 +82,4 @@ class GroundingDataset(torch.utils.data.Dataset):
         image = Image.open(self.data_dir / e["image_path"]).convert("RGB")
         prompt = build_prompt(self.coord, e["width"], e["height"])
         answer = objects_to_answer(e["objects"], self.coord, e["width"], e["height"])
-        return encode_example(self.processor, image, prompt, answer)
+        return encode_example(self.processor, image, prompt, answer, self.mask_prompt)

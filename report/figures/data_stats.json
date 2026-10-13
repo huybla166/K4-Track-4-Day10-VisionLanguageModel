@@ -1,0 +1,42 @@
+{
+  "splits": {
+    "train": {
+      "images": 1422,
+      "boxes": {
+        "pothole": 1074,
+        "crack": 1750,
+        "manhole": 691
+      },
+      "empty_images": 0,
+      "sessions": 13,
+      "median_box_area_pct": 0.644
+    },
+    "val": {
+      "images": 276,
+      "boxes": {
+        "pothole": 66,
+        "crack": 470,
+        "manhole": 103
+      },
+      "empty_images": 0,
+      "sessions": 2,
+      "median_box_area_pct": 1.009
+    },
+    "test": {
+      "images": 311,
+      "boxes": {
+        "pothole": 121,
+        "crack": 299,
+        "manhole": 163
+      },
+      "empty_images": 0,
+      "sessions": 3,
+      "median_box_area_pct": 1.063
+    }
+  },
+  "session_overlap": {
+    "train&val": [],
+    "train&test": [],
+    "val&test": []
+  }
+}

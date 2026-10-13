@@ -12,3 +12,4 @@ adapter*/
 .ipynb_checkpoints/
 .pytest_cache/
 .DS_Store
+kaggle_jobs/build/

@@ -72,8 +72,9 @@ Hai lỗi phổ biến nhất (phân loại bằng `lab.analysis.error_breakdown
    với mọi box đúng cùng lớp) và 117 box sai vị trí (0,1 ≤ IoU < 0,5); chỉ 2 box sai lớp. Kiểu điển hình là một **dải
    "crack" kéo ngang hết khung hình**: 55 box rộng ≥ 90% chiều ngang trên 54 ảnh. Ví dụ `vlcsnap-00208`: output thô
    `[{"label": "crack", "bbox_2d": [0, 654, 1000, 829]}]` trong khi box đúng là crack `[450, 622, 766, 806]`.
-2. **Bỏ sót (FN)**: recall chỉ 0,077. Model trả trung bình 1,00 box/ảnh trong khi ảnh test có 1,87 box/ảnh; 414/538 box
-   đúng bị bỏ sót hoàn toàn (không có dự đoán nào IoU ≥ 0,1), và 14 ảnh trả `[]` dù **không ảnh test nào rỗng**. Lớp
+2. **Bỏ sót (FN)**: recall chỉ 0,077. Model trả trung bình 1,00 box/ảnh trong khi ảnh test có 1,87 box/ảnh. Trong 583 box
+   đúng chỉ khớp được 45; 538 box bị lỡ (FN), trong đó 414 box bỏ sót hoàn toàn (không có dự đoán nào IoU ≥ 0,1).
+   14 ảnh trả `[]` dù **không ảnh test nào rỗng**. Lớp
    crack gần như không tìm được (F1 0,033).
 
 Model gốc **không** sai thang: toạ độ của nó đúng là 0–1000 (chấm cùng file dự đoán theo pixel cho F1 = 0,000, xem
@@ -97,7 +98,7 @@ của mọi box biến thành > 1000: **100% trong 504 box của E3 lọt ra ngo
 hết vào 32% phía trên ảnh (y ≤ 318, tức vùng trời và đường xa), cũng không box nào chạm box đúng (0/540). Với
 IoU ≥ 0,5 thì chỉ cần dịch nửa kích thước box là trượt, nên sai thang là phá huỷ hoàn toàn chứ không phải giảm vài %.
 
-Cách tôi kiểm chứng: (1) test `yolo_to_box` ↔ pixel quy đổi khứ hồi sai số ≤ 0,32 px; (2) bảng trên, chấm chéo cùng
+Cách tôi kiểm chứng: (1) quy đổi khứ hồi `yolo_to_box` → pixel trên mọi box của 3 split cho sai số ≤ 0,32 px (notebook mục 2); (2) bảng trên, chấm chéo cùng
 file; (3) chạy E4 thật với `coord_scale=pixel`. Model này học đúng thang mới: 540 box có x2 tối đa 640 và y2 tối đa
 318, không box nào vượt 640×360, nên `--coord` của `infer.py` và `score.py` phải đi cùng nhau. Đó là lý do mọi bằng
 chứng ghi trường `coord` và `lab.analysis` đọc trường này trước khi chấm. Bài học thực tế: nếu F1 bằng 0 tròn trên
@@ -146,7 +147,7 @@ Kết quả:
   lại chứ không tốt lên đều.
 - **Loss mất ý nghĩa.** Ước lượng thô: phần đáp án chỉ chiếm khoảng 0,6 × 70 ≈ 41 nat/mẫu trong tổng 4,14 × 426,6 ≈
   1.765 nat/mẫu. Prompt cố định thì học thuộc nhanh. Vậy phần lớn loss còn lại nằm ở 220 vị trí `<|image_pad|>`,
-  khoảng 7–8 nat/token. Model gần như không thể đoán ra id giữ chỗ này, vì đầu vào ở các vị trí đó là đặc trưng ViT và
+  khoảng 7–8 nat/token. Theo tôi, model gần như không thể đoán ra id giữ chỗ này vì đầu vào ở các vị trí đó là đặc trưng ViT và
   hàng của `<|image_pad|>` trong `lm_head` (dùng chung với `embed_tokens`) chưa từng được huấn luyện làm token đầu ra.
   Hệ quả là phần lớn gradient đi vào đuổi theo một mục tiêu vô ích, và đường loss không cho biết đáp án có tốt lên hay
   không.
@@ -416,13 +417,37 @@ số đo vẫn là của **một** T4 16 GB như Colab.
 
 ## Nhìn lại
 
-- **Điều quan trọng nhất học được:** con số chỉ có nghĩa khi đi kèm cách đo. Bootstrap cặp tách được E2 > E1, điều mà
-  hai CI riêng không làm được. Baseline chép nhãn cho thấy split ngẫu nhiên thổi phồng F1 gấp khoảng 30 lần mà không
-  cần học gì. Chấm sai thang cho F1 = 0 tròn, đúng dấu hiệu cần biết khi gỡ lỗi.
-- **Bất ngờ lớn nhất:** LoRA trên ViT (E3, +6,3M tham số) đáng giá gấp nhiều lần mở toàn bộ projector (E2, +109M tham
-  số). Cái nghẽn nằm ở đặc trưng thị giác cho vật nhỏ, không nằm ở ánh xạ sang LLM.
-- **Lỗi kỹ thuật tốn thời gian nhất:** `llm_int8_skip_modules=["visual"]` không còn khớp với transformers 5.x, nên ViT
-  bị lượng tử hoá một cách âm thầm. Tôi chỉ phát hiện nhờ đếm tham số projector ra đúng một nửa. Từ đó tôi luôn thêm
-  `assert` kiểm tra dtype ngay sau khi nạp model (chi tiết trong `BAO_CAO_LOI_VA_LUU_Y.md`).
-- **Nếu có thêm GPU:** chạy 3 seed cho E1–E4 để có phương sai giữa các seed. Làm sạch 123 cặp nhãn manhole/pothole
-  trùng nhau trong train. Thử GRPO với reward thưởng recall và chạy lâu hơn kèm theo dõi tỉ lệ box khổng lồ.
+**Điều tôi chưa hiểu hết, hoặc mới chỉ có giả thuyết chưa kiểm chứng:**
+
+- **Vì sao loss khi không mask dừng ở khoảng 4,1.** Tôi cho rằng phần lớn loss đến từ 220 vị trí `<|image_pad|>` (câu 4),
+  nhưng tôi chưa đo loss tách theo từng loại token (ảnh / prompt / đáp án). Đó mới là cách kiểm chứng đúng.
+- **Vì sao GRPO không tăng recall chút nào.** Số box đúng của E5 bằng đúng E3 (233), chỉ FP giảm. Tôi chưa tách được
+  nguyên nhân là do quá ít bước (60 bước, 0,19 epoch), do lr nhỏ, hay do bản thân reward chia cho `max(n_đúng,
+  n_dự_đoán)` chỉ khuyến khích bớt box.
+- **E2 − E1 (+0,044) có thật không, hay chỉ là nhiễu huấn luyện.** Mỗi setup chỉ chạy một seed nên tôi không đo được
+  phương sai giữa các seed. Câu này còn bỏ ngỏ.
+- **Cơ chế pixel thua 0–1000 (câu 10)** mới là giả thuyết (do mồi từ tiền huấn luyện). Muốn chắc cần thêm một thí
+  nghiệm, ví dụ huấn luyện lâu hơn xem khoảng cách có thu hẹp không.
+
+**Lỗi dữ liệu và mô hình tôi gặp mà công cụ chấm không bắt được:**
+
+- **Nhãn nhiễu trong train:** 123 cặp box manhole/pothole trùng nhau (IoU ≥ 0,5, một vật mang 2 nhãn) và 20 cặp
+  crack/pothole, trong khi test chỉ có 1 cặp. Model học theo và bị tính FP "nhầm lớp" trên test (câu 9).
+  `score.py` không phân biệt được lỗi do model hay do nhãn.
+- **Box hỏng trong dữ liệu:** 1 box có diện tích 0 (`vlcsnap-00058`, h = 0) và 63 box tràn ra ngoài khung. Tôi phải kẹp
+  lại khi tạo nhãn. Nếu không, `parse_output` sẽ loại **cả ảnh** chỉ vì một box có `x2 ≤ x1`.
+- **Mất trọn cả ảnh vì một lỗi nhỏ:** khi output bị cắt ở 256 token (25 ảnh E0 lặp box crack, 1 ảnh E4-pixel lặp box
+  pothole) hoặc sai một dấu ngoặc, mọi box đúng phía trước cũng bị bỏ. Công cụ chấm tính đó là "JSON hỏng" chứ không
+  cho điểm phần đúng.
+- **Sai thang toạ độ là lỗi im lặng:** chấm nhầm `--coord` cho F1 = 0,000 mà không có cảnh báo nào (câu 3).
+- **CI95 lạc quan:** bootstrap theo ảnh coi 311 ảnh là độc lập, trong khi test chỉ có 3 phiên quay (câu 8).
+- **IoU 0,5 quá khắt khe với crack:** 126/199 FN của crack ở E3 là đúng lớp nhưng IoU 0,1–0,5, vì cách khoanh một vết
+  nứt dài (cả vết hay từng đoạn) không thống nhất giữa các ảnh.
+- **Lỗi kỹ thuật không test nào bắt:** với transformers 5.x, `llm_int8_skip_modules=["visual"]` âm thầm lượng tử hoá cả
+  ViT. Tôi chỉ phát hiện nhờ đếm tham số projector ra đúng một nửa, rồi thêm `assert_vit_not_quantized()` (câu 5,
+  `BAO_CAO_LOI_VA_LUU_Y.md`).
+
+**Điều rút ra:** con số chỉ có nghĩa khi đi kèm cách đo. Bootstrap cặp tách được E2 > E1 mà hai CI riêng không làm
+được. Baseline chép nhãn cho thấy split ngẫu nhiên thổi phồng F1 khoảng 30 lần mà không cần học gì. Bất ngờ lớn nhất:
+LoRA trên ViT (+6,3M tham số) đáng giá hơn nhiều so với mở toàn bộ projector (+109M). Nếu có thêm GPU, tôi sẽ chạy 3
+seed cho E1–E4, làm sạch 123 cặp nhãn trùng, và thử GRPO với reward thưởng thêm cho recall.

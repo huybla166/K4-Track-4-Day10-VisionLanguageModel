@@ -50,6 +50,12 @@ sys.path.insert(0, '.')
 r = subprocess.run([sys.executable, '-m', 'pytest', '-q', 'tests', 'lab/tests'], capture_output=True, text=True,
                    encoding='utf-8', errors='replace')
 print(r.stdout.strip().splitlines()[-1])
+print([l for l in r.stdout.splitlines() if l.startswith('FAILED')])
+"""),
+    md("""
+> Test duy nhất fail là `test_report_template_has_student_markers_and_ten_questions`: nó đòi `REPORT.md` **còn** chuỗi
+> `<điền` (viết cho bản template), trong khi `scripts/check_submission.py` báo FAIL nếu chuỗi đó còn. Báo cáo đã điền
+> xong nên test này fail là đúng; `check_submission.py` cho 0 FAIL. Không sửa `tests/` (đề cấm).
 """),
     md("## 1. Dữ liệu: split theo phiên quay"),
     code("""
